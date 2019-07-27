@@ -1,58 +1,86 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+
+    <div class="ex">
+      <label>Example</label>
+      <md-chips v-model="fruits" class="fruits">
+        <!-- <div> <md-icon>search</md-icon></div> -->
+      </md-chips>
+    </div> 
+    <div class="ex1">
+       <label>Example</label>
+      <md-field>
+          <!-- <label for="country">Country</label> -->
+      <md-select v-model="country" name="country" id="country" placeholder="Country">
+        <md-option value="australia">Australia</md-option>
+        <md-option value="brazil">Brazil</md-option>
+        <md-option value="japan">Japan</md-option>
+        <md-option value="united-states">United States</md-option>
+      </md-select>
+      </md-field>
+    </div>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import VueMaterial from "vue-material";
+import "vue-material/dist/vue-material.min.css";
+import "vue-material/dist/theme/default.css";
+Vue.use(VueMaterial);
+
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
     msg: String
-  }
-}
+  },
+  data: () => ({
+    fruits: ["Orange", "Apple", "Pineapple"],
+    country: null
+  })
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style >
+.md-chip {
+  border-radius: 0px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.md-chip.md-theme-default {
+  background: aliceblue;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.md-field {
+  position: fixed;
+  min-height: 29px;
+  border-right: 1px solid;
+  width: 500px;
+  border-left: 1px solid;
+  border-top: 1px solid;
+  margin-left: 73px;
 }
-a {
-  color: #42b983;
+.md-chips.md-field {
+  flex-wrap: nowrap;
+}
+.md-chips.md-field .md-chip {
+  margin-left: 5px;
+}
+label {
+  display: flex;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+.ex {
+  display: flex;
+  flex-direction: row;
+}
+.md-menu.md-select {
+  width: 500px;
+  margin-left: 73px;
+  flex: inherit;
+}
+.ex1 {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
 }
 </style>
