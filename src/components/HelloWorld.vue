@@ -1,86 +1,78 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-
-    <div class="ex">
-      <label>Example</label>
-      <md-chips v-model="fruits" class="fruits">
-        <!-- <div> <md-icon>search</md-icon></div> -->
-      </md-chips>
-    </div> 
-    <div class="ex1">
-       <label>Example</label>
-      <md-field>
-          <!-- <label for="country">Country</label> -->
-      <md-select v-model="country" name="country" id="country" placeholder="Country">
-        <md-option value="australia">Australia</md-option>
-        <md-option value="brazil">Brazil</md-option>
-        <md-option value="japan">Japan</md-option>
-        <md-option value="united-states">United States</md-option>
-      </md-select>
-      </md-field>
-    </div>
+    <p>{{msg}}</p>
+   <div >
+     <select class="form-control" @change="change">
+            <option value="">Choose</option>
+            <option v-for="(fruit, index) in fruits" 
+                    :key="index" :value="fruit.id"
+                    :selected="selectedOption(fruit)">
+                    {{ fruit.name }}
+            </option>
+        </select>
+   </div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-import VueMaterial from "vue-material";
-import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default.css";
-Vue.use(VueMaterial);
-
 export default {
   name: "HelloWorld",
   props: {
-    msg: String
+    msg: String,
   },
-  data: () => ({
-    fruits: ["Orange", "Apple", "Pineapple"],
-    country: null
-  })
+  data() {
+    return {
+      selected: null,
+      fruits: [{ id: "1", name: "Banana" }, { id: "2", name: "Orange" }]
+    };
+  },
+  methods: {
+    selectedOption: function(option) {
+      if (this.value) {
+        return option.id === this.value.id;
+      }
+      return false;
+    },
+    change: function(e) {
+      const selectedCode = e.target.value;
+      const option = this.fruits.find(option => {
+        return selectedCode === option.id;
+      });
+      this.$emit("input", option);
+    }
+  }
 };
 </script>
 
 <style >
-.md-chip {
-  border-radius: 0px;
+.form-control {
+ /* Size and position */
+	position: relative;
+	width: 200px;
+	margin: 0 auto;
+	padding: 10px;
+    /* Styles */
+	background: #fff;
+	border-radius: 7px;
+	border: 1px solid rgba(0,0,0,0.15);
+	box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+	cursor: pointer;
+	outline: none;
+    /* Font settings */
+	font-weight: bold;
+	color: #8AA8BD;
 }
-.md-chip.md-theme-default {
-  background: aliceblue;
+.form-control:after {
+	content: "";
+	width: 0;
+	height: 0;
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	margin-top: -3px;
+	border-width: 6px 6px 0 6px;
+	border-style: solid;
+	border-color: #8aa8bd transparent;
 }
-.md-field {
-  position: fixed;
-  min-height: 29px;
-  border-right: 1px solid;
-  width: 500px;
-  border-left: 1px solid;
-  border-top: 1px solid;
-  margin-left: 73px;
-}
-.md-chips.md-field {
-  flex-wrap: nowrap;
-}
-.md-chips.md-field .md-chip {
-  margin-left: 5px;
-}
-label {
-  display: flex;
-  margin-top: 20px;
-  margin-left: 5px;
-}
-.ex {
-  display: flex;
-  flex-direction: row;
-}
-.md-menu.md-select {
-  width: 500px;
-  margin-left: 73px;
-  flex: inherit;
-}
-.ex1 {
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-}
+
 </style>
